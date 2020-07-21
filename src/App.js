@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -33,7 +33,7 @@ const App = () => {
         options={breed}
         placeholder="Choose a cat breed..."
       />
-      <img height="500px" src={image} />
+      <img alt="Cat image" height="500px" src={image} />
     </div>
   );
 };
