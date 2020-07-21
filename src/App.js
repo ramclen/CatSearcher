@@ -33,7 +33,7 @@ const App = () => {
         options={breed}
         placeholder="Choose a cat breed..."
       />
-      <img alt="Cat image" height="500px" src={image} />
+      <img alt="Cat breed" height="500px" src={image} />
     </div>
   );
 };
