@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
+import cats from "./api/cats";
+
+const App = () => {
+  const [breed, setBreed] = useState([]);
+  const [image, setImage] = useState("");
+
+  const searchBreed = (e) => {
+    cats.get("breeds/search?q=" + e).then(({ data }) => {
+      setBreed(data.map((breed) => breed));
+    });
+  };
+
+  const onChange = (selection) => {
+    if (selection[0]) {
+      cats
+        .get(`images/search?breed_ids=${selection[0].id}`)
+        .then(({ data }) => {
+          setImage(data[0].url);
+        });
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <AsyncTypeahead
+        labelKey="name"
+        onChange={onChange}
+        onSearch={(e) => searchBreed(e)}
+        options={breed}
+        placeholder="Choose a cat breed..."
+      />
+      <img height="500px" src={image} />
     </div>
   );
-}
+};
 
 export default App;
